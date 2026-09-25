@@ -33,3 +33,15 @@ html{scroll-behavior:smooth;scroll-padding-top:28px}::selection{background:#cce5
 @media(prefers-reduced-motion:reduce){.hero-art,.hero-art img,.workcard,.workcard .visual img,.workbody>span,.service,.ops-demo,.ops-tabs button,.ops-demo button{transition:none!important}.hero-art{transform:none!important}}
 @media(max-width:560px){.ops-demo{backdrop-filter:none}.ops-tabs button:focus-visible{outline:2px solid #d7ac61;outline-offset:2px}}
 .workcard>a{display:block;height:100%;cursor:pointer}
+@media(max-width:560px){.hero h1 br{display:initial}}
+/* Keep decorative light inside the viewport at every breakpoint. */
+.hero:before{right:0;width:min(64%,760px)}
+@media(max-width:850px){.hero:before{right:0;width:min(100%,650px)}}
+@media(max-width:560px){.hero:before{right:0;width:100%}}
+.hero h1{font-size:clamp(46px,4.4vw,58px);line-height:1.04}
+.ops-tabs button[aria-pressed="true"]{background:#ffffff18;color:#fff;box-shadow:0 1px 4px #0002}
+@media(max-width:850px){.hero h1{font-size:48px}}
+@media(max-width:560px){.hero h1{font-size:clamp(34px,9vw,39px)}}
+@media(min-width:851px){.hero{grid-template-columns:minmax(0,1.16fr) minmax(0,.84fr);gap:48px}}
+@media(max-width:850px){.case-top{grid-template-columns:minmax(0,1fr)}.case-top>*{min-width:0}}
+@media(max-width:560px){.case-top h1{font-size:clamp(33px,10vw,41px);overflow-wrap:anywhere}.case-top figure img{width:100%;height:auto}}
