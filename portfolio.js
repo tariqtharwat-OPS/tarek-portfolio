@@ -13,17 +13,50 @@
     revealTargets.forEach(node => observer.observe(node));
   } else revealTargets.forEach(node => node.classList.add('is-visible'));
 
-  document.querySelectorAll('[data-demo-cycle]').forEach(button => button.addEventListener('click', () => {
-    const panel = button.closest('.ops-demo');
-    const status = panel.querySelector('[data-demo-status]');
-    const task = panel.querySelector('[data-demo-task]');
-    const ready = button.getAttribute('aria-pressed') !== 'true';
-    button.setAttribute('aria-pressed', String(ready));
-    status.textContent = ready ? 'Ready for review' : 'In progress';
-    status.classList.toggle('ready', ready);
-    task.textContent = ready ? 'Supplier comparison prepared' : 'Supplier comparison underway';
-    panel.classList.toggle('demo-updated', ready);
-  }));
+  const demoViews = {
+    priorities: [
+      ['Supplier comparison underway', 'Commercial research · next review', 'In progress'],
+      ['Buyer brief ready', 'Documentation · owner decision', 'Ready'],
+      ['Market question assigned', 'Research · evidence gathering', 'In progress']
+    ],
+    research: [
+      ['Define the decision question', 'Research · scope and context', 'In progress'],
+      ['Compare source evidence', 'Market scan · review-ready', 'Ready'],
+      ['Prepare a concise brief', 'Next step · owner review', 'In progress']
+    ],
+    follow: [
+      ['Clarification prepared', 'Commercial desk · owner review', 'Ready'],
+      ['Next action assigned', 'Human coordination · follow-through', 'In progress'],
+      ['Decision point recorded', 'Management view · ready to review', 'In progress']
+    ]
+  };
+  document.querySelectorAll('.ops-demo').forEach(panel => {
+    const tasks = [...panel.querySelectorAll('[data-demo-task]')];
+    const metas = [...panel.querySelectorAll('[data-demo-meta]')];
+    const statuses = [...panel.querySelectorAll('[data-demo-status]')];
+    const rows = [...panel.querySelectorAll('.ops-row')];
+    panel.querySelectorAll('[data-demo-view]').forEach(button => button.addEventListener('click', () => {
+      panel.querySelectorAll('[data-demo-view]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      const view = demoViews[button.dataset.demoView];
+      view.forEach((item, i) => {
+        tasks[i].textContent = item[0]; metas[i].textContent = item[1]; statuses[i].textContent = item[2];
+        statuses[i].classList.toggle('ready', item[2] === 'Ready');
+        rows[i].classList.remove('ready-moment');
+      });
+      panel.querySelector('[data-demo-cycle]').setAttribute('aria-pressed', 'false');
+      panel.classList.remove('demo-updated');
+    }));
+    panel.querySelector('[data-demo-cycle]').addEventListener('click', event => {
+      const button = event.currentTarget;
+      const status = statuses[0];
+      const ready = button.getAttribute('aria-pressed') !== 'true';
+      button.setAttribute('aria-pressed', String(ready));
+      status.textContent = ready ? 'Ready for review' : 'In progress';
+      status.classList.toggle('ready', ready);
+      rows[0].classList.toggle('ready-moment', ready);
+      panel.classList.toggle('demo-updated', ready);
+    });
+  });
 
   const steps = [...document.querySelectorAll('[data-research-step]')];
   steps.forEach(step => step.addEventListener('click', () => {
