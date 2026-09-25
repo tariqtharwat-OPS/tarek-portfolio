@@ -6,5 +6,4 @@
 - `proposal-structure.svg`: generic bilingual-proposal structure without source figures or identities.
 - `moza-cockpit-demo.svg`: original fictional scenario; no current tasks or system data.
 - `magicwords-learning-flows.svg`: designed feature summary; not a UI screenshot.
-- `magicwords-learning-art.jpg`: public project artwork, copied then re-saved to remove image metadata.
 - `gig-*.svg`: draft platform-image concepts.
